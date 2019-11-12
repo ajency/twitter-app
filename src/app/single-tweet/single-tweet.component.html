@@ -1,15 +1,15 @@
 <div class="tweet-widget">
     <div class="tweet-left-col">
-        <img class="img-rounded tweet-user-pic" src="assets/img/profile-dummy.png" alt/>
+        <img class="img-rounded tweet-user-pic" src="{{tweet.user.profile_image_url}}" alt/>
     </div>
     <div class="tweet-right-col">                            
         <div class="tweet-user-info">
-            <span class="tweet-user-fullname">Full Name</span>
-            <span class="tweet-user-account">@account</span>
-            <span class="tweet-user-tweet-time">Mon Nov 11 14:55:01 +0000 2019</span>
+            <span class="tweet-user-fullname">{{tweet.user.name}}</span>
+            <span class="tweet-user-account">@{{tweet.user.screen_name}}</span>
+            <span class="tweet-user-tweet-time">{{tweet.user.created_at}}</span>
         </div>
         <div class="tweet-user-comment">
-            Adobe XD 2020 - Պռոյեկտի վերականգնում (Document History) in Armenian https://t.co/mGLjatXimo via @YouTube
+            {{tweet.user.description}}
         </div>
     </div>
 </div>

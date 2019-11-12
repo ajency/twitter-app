@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-single-tweet',
@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SingleTweetComponent implements OnInit {
 
-  constructor() { }
+	@Input() tweet : any;
 
-  ngOnInit() {
-  }
+	constructor() { }
+
+	ngOnInit() {
+		console.log(this.tweet);
+	}
 
 }

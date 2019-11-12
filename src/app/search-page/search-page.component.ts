@@ -15,11 +15,13 @@ export class SearchPageComponent implements OnInit {
   timeLeft: number;
   interval;
   tweetsApiCall;
+  twitterParam : any;
   searchParam : any;
   tweets = [];
 
   ngOnInit() {
-    this.searchParam = this.route.snapshot.queryParamMap.get('key');
+    this.twitterParam = this.route.snapshot.queryParamMap.get('key');
+    this.searchParam = this.twitterParam;
     this.getAllTweets();
   }
 
@@ -35,9 +37,25 @@ export class SearchPageComponent implements OnInit {
   	}
   }
 
+  searchTweets() {
+    this.twitterParam = this.searchParam;
+    this.getAllTweets();
+  }
+
+  clearSearch(){
+    this.searchParam = '';
+    this.searchTweets();
+  }
+
+  enterClick(event){
+    if (event.keyCode === 13) {
+        this.searchTweets();
+    }
+  }
+
   getAllTweets(){
     this.unsubscribeTweetsApi();
-    let url = this.apiservice.apiUrl + '/twittersearch?key='+((!this.searchParam || this.searchParam.trim() == '') ? "adobe" : this.searchParam);
+    let url = this.apiservice.apiUrl + '/twittersearch?key='+((!this.twitterParam || this.twitterParam.trim() == '') ? "adobe" : this.twitterParam);
 
     this.tweetsApiCall = this.apiservice.request(url,'get',{}).subscribe((data)=>{
       this.tweets = data.statuses;

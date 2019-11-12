@@ -12,14 +12,16 @@
 
     <div class="search-box">
         <div class="search-box-wrapper">
-            <input type="search" class="input-search" id="input-search">
+            <input type="text" [(ngModel)]="searchParam" class="input-search" id="input-search" (keyup)="enterClick($event)">
+            <i [ngClass]="{'hide' : !searchParam}" (click)="clearSearch()">X</i>
+            <a href="javascript:void(0);" class="search-trigger d-inline-flex" (click)="searchTweets()">Search</a>
         </div>
     </div>
 
     <div class="search-results">
         <div class="tweet-wrap">
             <ng-container *ngFor="let tweet of tweets">
-                <app-single-tweet></app-single-tweet>
+                <app-single-tweet [tweet]="tweet"></app-single-tweet>
             </ng-container>
         </div>
     </div>
