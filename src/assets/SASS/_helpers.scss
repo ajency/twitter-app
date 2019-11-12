@@ -10,3 +10,29 @@ body {
     font-size: 16px;
     font-family: $font-roboto;
 }
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+
+    @include media-min(md){
+        max-width: 720px;
+    }
+    @include media-min(lg){
+        max-width: 960px;
+    }
+    @include media-min(xlg){
+        max-width: 1140px;
+    }
+}
+
+.img {
+    &-rounded {
+        border-radius: 56%;
+        max-width: 100%;
+        height: auto;
+    }
+}
