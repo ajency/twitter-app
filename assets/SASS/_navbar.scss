@@ -1,0 +1,22 @@
+.navbar {
+    padding: .7rem 1.5rem;
+    line-height: 2.2rem;
+    border-bottom: 1px solid #eaecef;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    .site-name {
+        font-size: 0.937rem;
+        font-weight: 500;
+        color: $primary;
+
+        @include media-min(md){
+            font-size: 1.3rem;
+        }
+    }
+    &-nav {
+        margin-left: auto;
+    }
+}
