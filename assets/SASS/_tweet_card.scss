@@ -1,0 +1,51 @@
+.tweet {
+    &-widget {
+        display: flex;
+        padding: 10px 15px;
+        border: 1px solid $lightgrey;
+        border-radius: 4px;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 2px 0 rgba(37,44,97,.15), 0 0px 2px 0 rgba(93,100,148,.2);
+
+        .tweet-user {
+            &-pic {
+                max-width: 50px;
+                height: 50px;
+            }
+        }
+    }   
+    &-left {
+        col {
+            width: 50px;
+        }
+    }
+    &-right {
+        &-col {
+            padding-left: 15px;
+            width: calc(100% - 50px);
+        }
+    }
+    &-user {
+        &-info {
+            display: flex;
+            align-items: center;  
+            margin-bottom: 10px;          
+        }
+        &-fullname,
+        &-account,
+        &-tweet-time {
+            font-size: 0.75rem;
+            color: $telluric;            
+        }
+        &-account {
+            padding-left: 10px;
+        }
+        &-tweet-time {
+            margin-left: auto;
+        }
+        &-comment {
+            font-size: 0.875rem;
+            color: #707070;
+        }
+    }
+}
