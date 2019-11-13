@@ -24,7 +24,7 @@
     </div>
 
     <div class="search-loading">
-        <div class="loadingBlock"> <!-- This loadingBlock to be repeated n number of times to show as list loader -->
+        <div *ngIf="(tweets.length == 0) && !noPosts" class="loadingBlock">
             <div class="d-flex">
                 <div class="loadingBlock-image"></div>
                 <div class="loadingBlock-content">

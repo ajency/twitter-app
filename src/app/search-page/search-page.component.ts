@@ -18,6 +18,7 @@ export class SearchPageComponent implements OnInit {
   twitterParam : any;
   searchParam : any;
   tweets = [];
+  dummy = [];
   noPosts = false;
 
   ngOnInit() {
@@ -55,6 +56,13 @@ export class SearchPageComponent implements OnInit {
     }
   }
 
+  setTimer(){
+    this.timeLeft = 30;
+    this.interval = setInterval(() => {
+      this.setTime();
+    },1000);
+  }
+
   getAllTweets(){
     this.unsubscribeTweetsApi();
     let url = this.apiservice.apiUrl + '/twittersearch?key='+((!this.twitterParam || this.twitterParam.trim() == '') ? "adobe" : this.twitterParam);
@@ -63,22 +71,25 @@ export class SearchPageComponent implements OnInit {
       if(data.statuses && data.statuses.length != 0) {
         let i=0;
         for (const tweet of data.statuses.reverse()) {
-          setTimeout(() => {
-            this.tweets.unshift(tweet);
-          }, 0 * i++);
+          if (this.dummy.indexOf(tweet.id) < 0) {
+            this.dummy.push(tweet.id);
+            setTimeout(() => {
+              this.tweets.unshift(tweet);
+            }, 500 * i++);
+          }
         }
       } else {
         if(this.tweets.length == 0) {
           this.noPosts = true;
         }
       }
-      this.timeLeft = 30;
-      this.interval = setInterval(() => {
-        this.setTime();
-      },1000);
+      this.setTimer();
     },
     (error)=>{
-      this.noPosts = true;
+      if(this.tweets.length == 0) {
+        this.noPosts = true;
+      }
+      this.setTimer();
       console.log("error in fetching the json",error);
     });
   }

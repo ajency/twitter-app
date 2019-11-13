@@ -1,13 +1,15 @@
     <div class="tweet-left-col">
-        <img class="img-rounded tweet-user-pic" src="{{tweet.user.profile_image_url}}" alt/>
+        <a href="https://twitter.com/{{tweet.user.screen_name}}"><img class="img-rounded tweet-user-pic" src="{{tweet.user.profile_image_url}}" alt/></a>
     </div>
     <div class="tweet-right-col">                            
         <div class="tweet-user-info">
-            <span class="tweet-user-fullname">{{tweet.user.name}}</span>
+            <a href="https://twitter.com/{{tweet.user.screen_name}}"><span class="tweet-user-fullname">{{tweet.user.name}}</span></a>
             <span class="tweet-user-account">@{{tweet.user.screen_name}}</span>
-            <span class="tweet-user-tweet-time">{{tweet.user.created_at}}</span>
+            <span class="tweet-user-tweet-time">{{tweet.created_at}}</span>
         </div>
-        <div class="tweet-user-comment">
-            {{tweet.user.description}}
-        </div>
+        <a href="https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}">
+            <div class="tweet-user-comment">
+                {{tweet.text}}
+            </div>
+        </a>
     </div>
