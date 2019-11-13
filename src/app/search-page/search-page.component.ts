@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiServiceService } from '../service/api-service.service';
+import { AppServiceService } from '../service/app-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-page',
@@ -10,7 +12,8 @@ import { ApiServiceService } from '../service/api-service.service';
 export class SearchPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
-    private apiservice: ApiServiceService) { }
+    private apiservice: ApiServiceService,
+    private appservice: AppServiceService) { }
 
   timeLeft: number;
   interval;
@@ -20,11 +23,18 @@ export class SearchPageComponent implements OnInit {
   tweets = [];
   dummy = [];
   noPosts = false;
+  fetchLoader = false;
+  listner : Subscription;
 
   ngOnInit() {
     this.twitterParam = this.route.snapshot.queryParamMap.get('key');
     this.searchParam = this.twitterParam;
     this.getAllTweets();
+    this.listner = this.appservice.listenToSearchParamTrigger().subscribe((param) => {
+      this.twitterParam = param;
+      this.tweets = [];
+      this.getAllTweets();
+    })
   }
 
   ngOnDestroy() {
@@ -39,24 +49,8 @@ export class SearchPageComponent implements OnInit {
   	}
   }
 
-  searchTweets() {
-    this.twitterParam = this.searchParam;
-    this.tweets = [];
-    this.getAllTweets();
-  }
-
-  clearSearch(){
-    this.searchParam = '';
-    this.searchTweets();
-  }
-
-  enterClick(event){
-    if (event.keyCode === 13) {
-        this.searchTweets();
-    }
-  }
-
   setTimer(){
+    this.fetchLoader = false;
     this.timeLeft = 30;
     this.interval = setInterval(() => {
       this.setTime();
@@ -66,7 +60,7 @@ export class SearchPageComponent implements OnInit {
   getAllTweets(){
     this.unsubscribeTweetsApi();
     let url = this.apiservice.apiUrl + '/twittersearch?key='+((!this.twitterParam || this.twitterParam.trim() == '') ? "adobe" : this.twitterParam);
-
+    this.fetchLoader = true;
     this.tweetsApiCall = this.apiservice.request(url,'get',{}).subscribe((data)=>{
       if(data.statuses && data.statuses.length != 0) {
         let i=0;

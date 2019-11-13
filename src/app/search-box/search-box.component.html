@@ -1,0 +1,9 @@
+<div class="search-box">
+    <div class="search-box-wrapper">
+        <input type="text" [(ngModel)]="searchParam" class="input-search" id="input-search" (keyup)="enterClick($event)">
+        <div class="search-box-actions">
+            <i [ngClass]="{'hide' : !searchParam}" class="clearSearch" (click)="clearSearch()">X</i>
+            <a href="javascript:void(0);" class="search-trigger d-inline-flex" (click)="searchTweets()">Search</a>
+        </div>
+    </div>
+</div>
