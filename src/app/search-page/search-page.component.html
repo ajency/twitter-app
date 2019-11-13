@@ -31,11 +31,11 @@
 
     <div class="search-results">
         <div class="tweet-wrap">
-            <p *ngIf="fetchLoader && (tweets.length != 0) && !noPosts">Trying to fetch New Posts</p>
+            <div class="info-box" *ngIf="fetchLoader && (tweets.length != 0) && !noPosts">Fetching new posts...</div>
             <ng-container *ngFor="let tweet of tweets">
                 <app-single-tweet [tweet]="tweet" class="tweet-widget"></app-single-tweet>
             </ng-container>
-            <p *ngIf="noPosts">No Posts Found</p>
+            <div class="info-box" *ngIf="noPosts">No Posts Found</div>
         </div>
     </div>
 
