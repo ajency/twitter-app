@@ -24,12 +24,14 @@
     </div>
 
     <div class="search-loading">
-        <div *ngIf="(tweets.length == 0) && !noPosts" class="loadingBlock">
-            <div class="d-flex">
-                <div class="loadingBlock-image"></div>
-                <div class="loadingBlock-content">
-                    <div class="loadingBlock-title"></div>
-                    <div class="loadingBlock-details"></div>
+        <div *ngIf="(tweets.length == 0) && !noPosts" class="">
+            <div class="loadingBlock" *ngFor="let number of [0,1,2,3,4,5]">
+                <div class="d-flex">
+                    <div class="loadingBlock-image"></div>
+                    <div class="loadingBlock-content">
+                        <div class="loadingBlock-title"></div>
+                        <div class="loadingBlock-details"></div>
+                    </div>
                 </div>
             </div>
         </div>

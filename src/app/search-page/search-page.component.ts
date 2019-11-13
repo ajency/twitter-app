@@ -75,7 +75,7 @@ export class SearchPageComponent implements OnInit {
             this.dummy.push(tweet.id);
             setTimeout(() => {
               this.tweets.unshift(tweet);
-            }, 500 * i++);
+            }, 0 * i++);
           }
         }
       } else {
