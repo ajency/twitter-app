@@ -3,8 +3,16 @@
         <span class="site-name">Search @Twitter</span>
     </div>
     <div class="navbar-nav">
+        <div>
+            <button type="button" (click)="getAllTweets()">Refresh</button>
+        </div>
+        <div>
+            <button *ngIf="!autoRefresh" type="button" (click)="changeAutoRefresh(true)">Start</button>
+            <button *ngIf="autoRefresh" type="button" (click)="changeAutoRefresh(false)">Stop</button>
+        </div>
         <div class="auto-refresh--countdown">
-            <div *ngIf="interval" class="auto-refresh--text">Auto refresh in <span class="auto-refresh--count">{{timeLeft}}</span> <span class="auto-refresh--sec"> second{{(timeLeft == 1) ? '' : 's'}}</span></div>
+            <div *ngIf="!autoRefresh" class="auto-refresh--text">Auto refresh disbled</div>
+            <div *ngIf="interval && autoRefresh" class="auto-refresh--text">Auto refresh in <span class="auto-refresh--count">{{timeLeft}}</span> <span class="auto-refresh--sec"> second{{(timeLeft == 1) ? '' : 's'}}</span></div>
         </div>
     </div>
 </header>
