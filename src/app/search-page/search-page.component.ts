@@ -68,7 +68,9 @@ export class SearchPageComponent implements OnInit {
           }, 300 * i++);
         }
       } else {
-        this.noPosts = true;
+        if(this.tweets.length == 0) {
+          this.noPosts = true;
+        }
       }
       this.timeLeft = 30;
       this.interval = setInterval(() => {
