@@ -13,7 +13,7 @@
 </header>
 <div class="container">
 
-    <app-search-box [searchParam]="searchParam"></app-search-box>
+    <app-search-box (searchText)="searchByText($event)" [searchParam]="searchParam"></app-search-box>
 
     <div class="search-loading">
         <ng-container *ngIf="(tweets.length == 0) && !noPosts">

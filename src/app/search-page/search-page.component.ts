@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ApiServiceService } from '../service/api-service.service';
-import { AppServiceService } from '../service/app-service.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-page',
@@ -12,8 +10,8 @@ import { Subscription } from 'rxjs';
 export class SearchPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
-    private apiservice: ApiServiceService,
-    private appservice: AppServiceService) { }
+    private router: Router,
+    private apiservice: ApiServiceService) { }
 
   timeLeft: number;
   interval;
@@ -22,23 +20,26 @@ export class SearchPageComponent implements OnInit {
   searchParam : any;
   tweets = [];
   dummy = [];
+  timeouts = [];
   noPosts = false;
   fetchLoader = false;
-  listner : Subscription;
 
   ngOnInit() {
-    this.twitterParam = this.route.snapshot.queryParamMap.get('key');
+    this.twitterParam = (this.route.snapshot.queryParamMap.get('key')) ? this.route.snapshot.queryParamMap.get('key') : '';
     this.searchParam = this.twitterParam;
     this.getAllTweets();
-    this.listner = this.appservice.listenToSearchParamTrigger().subscribe((param) => {
-      this.twitterParam = param;
-      this.tweets = [];
-      this.getAllTweets();
-    })
   }
 
   ngOnDestroy() {
     this.unsubscribeTweetsApi();
+  }
+
+  searchByText(search_text){
+    this.twitterParam = search_text;
+    this.router.navigateByUrl("/?key="+this.twitterParam);
+    this.dummy = [];
+    this.tweets = [];
+    this.getAllTweets();
   }
 
   setTime() {
@@ -66,8 +67,8 @@ export class SearchPageComponent implements OnInit {
         let i=0;
         for (const tweet of data.statuses.reverse()) {
           if (this.dummy.indexOf(tweet.id) < 0) {
-            this.dummy.push(tweet.id);
-            setTimeout(() => {
+            this.timeouts[i] = setTimeout(() => {
+              this.dummy.push(tweet.id);
               this.tweets.unshift(tweet);
             }, 0 * i++);
           }
@@ -96,6 +97,10 @@ export class SearchPageComponent implements OnInit {
         clearInterval(this.interval);
         this.interval = null;
     }
+    for (const timeout of this.timeouts) {
+      clearTimeout(timeout);
+    }
+    this.timeouts = [];
     this.noPosts = false;
   }
 }
