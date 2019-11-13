@@ -28,10 +28,22 @@
         </div>
     </div>
 
+    <div class="search-loading">
+        <div class="loadingBlock"> <!-- This loadingBlock to be repeated n number of times to show as list loader -->
+            <div class="d-flex">
+                <div class="loadingBlock-image"></div>
+                <div class="loadingBlock-content">
+                    <div class="loadingBlock-title"></div>
+                    <div class="loadingBlock-details"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="search-results">
         <div class="tweet-wrap">
             <ng-container *ngFor="let tweet of tweets">
-                <app-single-tweet [tweet]="tweet"></app-single-tweet>
+                <app-single-tweet [tweet]="tweet" class="tweet-widget"></app-single-tweet>
             </ng-container>
         </div>
     </div>
