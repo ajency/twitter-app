@@ -1,12 +1,12 @@
 .navbar {
     padding: .7rem 1.5rem;
     line-height: 2.2rem;
-    border-bottom: 1px solid #eaecef;
+    border-bottom: 1px solid $lightgrey;
     background: #ffffff;
     display: flex;
     align-items: center;
     flex-direction: row;
-    z-index: 1;
+    z-index: 2;
 
     .site-name {
         font-size: 0.937rem;
