@@ -33,7 +33,7 @@
         <div class="tweet-wrap">
             <div class="info-box" *ngIf="fetchLoader && (tweets.length != 0) && !noPosts">Fetching new posts...</div>
             <ng-container *ngFor="let tweet of tweets">
-                <app-single-tweet [tweet]="tweet" class="tweet-widget"></app-single-tweet>
+                <app-single-tweet [tweet]="tweet" class="tweet-widget" [@fadeInOut]></app-single-tweet>
             </ng-container>
             <div class="info-box" *ngIf="noPosts">No Posts Found</div>
         </div>

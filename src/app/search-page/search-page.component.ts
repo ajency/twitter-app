@@ -1,11 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ApiServiceService } from '../service/api-service.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-search-page',
   templateUrl: './search-page.component.html',
-  styleUrls: ['./search-page.component.scss']
+  styleUrls: ['./search-page.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100px)', opacity: 0, height: '0px' }),
+        animate('0.35s cubic-bezier(0.215, 0.610, 0.355, 1.000)', 
+          style({ transform: 'translateY(0)', opacity: 1, height: '*' }))
+      ]),
+    ]),
+  ]
 })
 export class SearchPageComponent implements OnInit {
 

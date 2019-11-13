@@ -2,7 +2,8 @@
     &-wrap {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;   
+        justify-content: space-between;
+        overflow: hidden;   
 
         app-single-tweet {
             width: 100%;
@@ -22,8 +23,6 @@
         border-radius: 4px;
         margin-bottom: 12px;
         box-shadow: 0 1px 2px 0 rgba(37,44,97,.15);
-        animation: fadeIn 0.3s linear;
-        animation-fill-mode: both;
         position: relative;
         &:hover{
             box-shadow: 0 1px 2px 1px rgba(37,44,97,.15);
@@ -38,12 +37,6 @@
                 max-width: 50px;
                 height: 50px;
             }
-        }    
-        // Set delay per List Item
-        @for $i from 1 through 20 {
-          &:nth-child(#{$i}) {
-            animation-delay: .05s * $i;
-          }
         }
         a {
             text-decoration: none;
@@ -113,21 +106,4 @@
             }
         }
     }
-}
-
-
-
-// Keyframe animation
-@-webkit-keyframes fadeIn {
-  0% {
-    opacity: 0;
-    top: 100px;
-  }
-  75% {
-    opacity: 0.5;
-    top: 0px;
-  }
-  100% {
-    opacity: 1;
-  }
 }
