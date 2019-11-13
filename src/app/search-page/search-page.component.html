@@ -1,4 +1,5 @@
-<header class="navbar">
+<!-- Sticky Header -->
+<header class="navbar header">
     <div class="navbar-brand">
         <span class="site-name">Search @Twitter</span>
     </div>
@@ -11,10 +12,15 @@
         </div>
     </div>
 </header>
+<!-- Sticky Header End-->
+
 <div class="container">
 
+    <!-- Search bar -->
     <app-search-box (searchText)="searchByText($event)" [searchParam]="searchParam"></app-search-box>
+    <!-- Search bar End -->
 
+    <!-- Preloader -->
     <div class="search-loading">
         <ng-container *ngIf="(tweets.length == 0) && !noPosts">
             <div class="loadingBlock" *ngFor="let number of [0,1,2,3,4,5]">
@@ -28,13 +34,18 @@
             </div>
         </ng-container>
     </div>
+    <!-- Preloader End-->
 
     <div class="search-results">
         <div class="tweet-wrap">
             <div class="info-box" *ngIf="fetchLoader && (tweets.length != 0) && !noPosts">Fetching new posts...</div>
+
+            <!-- List of Tweets -->
             <ng-container *ngFor="let tweet of tweets">
                 <app-single-tweet [tweet]="tweet" class="tweet-widget" [@fadeInOut]></app-single-tweet>
             </ng-container>
+            <!-- List of Tweets End -->
+
             <div class="info-box" *ngIf="noPosts">No Posts Found</div>
         </div>
     </div>
