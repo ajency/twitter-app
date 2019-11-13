@@ -16,7 +16,7 @@
     <app-search-box [searchParam]="searchParam"></app-search-box>
 
     <div class="search-loading">
-        <div *ngIf="(tweets.length == 0) && !noPosts" class="">
+        <ng-container *ngIf="(tweets.length == 0) && !noPosts">
             <div class="loadingBlock" *ngFor="let number of [0,1,2,3,4,5]">
                 <div class="d-flex">
                     <div class="loadingBlock-image"></div>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </ng-container>
     </div>
 
     <div class="search-results">
