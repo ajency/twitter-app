@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AppServiceService } from '../service/app-service.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-search-box',
@@ -10,12 +9,14 @@ export class SearchBoxComponent implements OnInit {
 
 	@Input() searchParam : any;
 
-	constructor(private appService: AppServiceService) { }
+	@Output() searchText = new EventEmitter();
+
+	constructor() { }
 
 	ngOnInit() { }
 
 	searchTweets() {
-		this.appService.searchParamTrigger(this.searchParam);
+		this.searchText.emit(this.searchParam);
 	}
 
 	clearSearch(){
