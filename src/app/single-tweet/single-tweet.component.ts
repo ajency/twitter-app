@@ -11,8 +11,6 @@ export class SingleTweetComponent implements OnInit {
 
 	constructor() { }
 
-	ngOnInit() {
-		console.log(this.tweet);
-	}
+	ngOnInit() { }
 
 }

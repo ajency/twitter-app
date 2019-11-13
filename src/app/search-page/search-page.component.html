@@ -4,15 +4,10 @@
     </div>
     <div class="navbar-nav">
         <div class="header-action-btn">
-            <button type="button" class="btn-icon" (click)="getAllTweets()"><img src="assets/img/refresh.svg" alt="refresh" width="25" height="25" /></button>
+            <button *ngIf="interval" type="button" class="btn-icon" (click)="getAllTweets()"><img src="assets/img/refresh.svg" alt="refresh" width="25" height="25" /></button>
         </div>
-        <!-- <div class="header-action-btn">
-            <button *ngIf="!autoRefresh" class="btn-icon" type="button" (click)="changeAutoRefresh(true)"><img src="assets/img/play.svg" alt="refresh" width="20" height="20" /></button>
-            <button *ngIf="autoRefresh" class="btn-icon" type="button" (click)="changeAutoRefresh(false)"><img src="assets/img/stop.svg" alt="refresh" width="20" height="20" /></button>
-        </div> -->
         <div class="auto-refresh--countdown">
-            <div *ngIf="!autoRefresh" class="auto-refresh--text">Auto refresh disbled</div>
-            <div *ngIf="interval && autoRefresh" class="auto-refresh--text">Auto refresh in <span class="auto-refresh--count">{{timeLeft}}</span> <span class="auto-refresh--sec"> second{{(timeLeft == 1) ? '' : 's'}}</span></div>
+            <div *ngIf="interval" class="auto-refresh--text">Auto refresh in <span class="auto-refresh--count">{{timeLeft}}</span> <span class="auto-refresh--sec"> second{{(timeLeft == 1) ? '' : 's'}}</span></div>
         </div>
     </div>
 </header>
@@ -45,6 +40,7 @@
             <ng-container *ngFor="let tweet of tweets">
                 <app-single-tweet [tweet]="tweet" class="tweet-widget"></app-single-tweet>
             </ng-container>
+            <p *ngIf="noPosts">No Posts Found</p>
         </div>
     </div>
 

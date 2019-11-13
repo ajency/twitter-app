@@ -18,7 +18,7 @@ export class SearchPageComponent implements OnInit {
   twitterParam : any;
   searchParam : any;
   tweets = [];
-  autoRefresh = true;
+  noPosts = false;
 
   ngOnInit() {
     this.twitterParam = this.route.snapshot.queryParamMap.get('key');
@@ -40,6 +40,7 @@ export class SearchPageComponent implements OnInit {
 
   searchTweets() {
     this.twitterParam = this.searchParam;
+    this.tweets = [];
     this.getAllTweets();
   }
 
@@ -54,39 +55,30 @@ export class SearchPageComponent implements OnInit {
     }
   }
 
-  changeAutoRefresh(boolean){
-    this.autoRefresh = boolean;
-    if (!boolean) {
-        this.stopInterval();
-    } else {
-        this.startInterval();
-    }
-  }
-
-  stopInterval(){
-    if(this.interval) {
-        clearInterval(this.interval);
-        this.interval = null;
-    }
-  }
-
-  startInterval(){
-    this.stopInterval();
-    this.timeLeft = 30;
-    this.interval = setInterval(() => {
-      this.setTime();
-    },1000);
-  }
-
   getAllTweets(){
     this.unsubscribeTweetsApi();
     let url = this.apiservice.apiUrl + '/twittersearch?key='+((!this.twitterParam || this.twitterParam.trim() == '') ? "adobe" : this.twitterParam);
 
     this.tweetsApiCall = this.apiservice.request(url,'get',{}).subscribe((data)=>{
-      this.tweets = data.statuses;
-      this.startInterval();
+      if(data.statuses && data.statuses.length != 0) {
+        let i=0;
+        for (const tweet of data.statuses.reverse()) {
+          setTimeout(() => {
+            this.tweets.unshift(tweet);
+          }, 300 * i++);
+        }
+      } else {
+        if(this.tweets.length == 0) {
+          this.noPosts = true;
+        }
+      }
+      this.timeLeft = 30;
+      this.interval = setInterval(() => {
+        this.setTime();
+      },1000);
     },
     (error)=>{
+      this.noPosts = true;
       console.log("error in fetching the json",error);
     });
   }
@@ -95,7 +87,10 @@ export class SearchPageComponent implements OnInit {
     if(this.tweetsApiCall){
       this.tweetsApiCall.unsubscribe();
     }
-    this.stopInterval();
-    this.tweets = [];
+    if(this.interval) {
+        clearInterval(this.interval);
+        this.interval = null;
+    }
+    this.noPosts = false;
   }
 }
