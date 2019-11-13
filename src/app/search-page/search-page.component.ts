@@ -46,7 +46,7 @@ export class SearchPageComponent implements OnInit {
   	if(this.timeLeft > 1) {
   		this.timeLeft--;
   	} else {
-  		this.getAllTweets();
+  		this.getAllTweets(true);
   	}
   }
 
@@ -58,35 +58,37 @@ export class SearchPageComponent implements OnInit {
     },1000);
   }
 
-  getAllTweets(){
+  getAllTweets(newPosts = false){
     this.unsubscribeTweetsApi();
     let url = this.apiservice.apiUrl + '/twittersearch?key='+((!this.twitterParam || this.twitterParam.trim() == '') ? "adobe" : this.twitterParam);
     this.fetchLoader = true;
-    this.tweetsApiCall = this.apiservice.request(url,'get',{}).subscribe((data)=>{
-      if(data.statuses && data.statuses.length != 0) {
-        let i=0;
-        for (const tweet of data.statuses.reverse()) {
-          if (this.dummy.indexOf(tweet.id) < 0) {
-            this.timeouts[i] = setTimeout(() => {
-              this.dummy.push(tweet.id);
-              this.tweets.unshift(tweet);
-            }, 0 * i++);
+    setTimeout(() => {
+        this.tweetsApiCall = this.apiservice.request(url,'get',{}).subscribe((data)=>{
+          if(data.statuses && data.statuses.length != 0) {
+            let i=0;
+            for (const tweet of data.statuses.reverse()) {
+              if (this.dummy.indexOf(tweet.id) < 0) {
+                this.timeouts[i] = setTimeout(() => {
+                  this.dummy.push(tweet.id);
+                  this.tweets.unshift(tweet);
+                }, 500 * i++);
+              }
+            }
+          } else {
+            if(this.tweets.length == 0) {
+              this.noPosts = true;
+            }
           }
-        }
-      } else {
-        if(this.tweets.length == 0) {
-          this.noPosts = true;
-        }
-      }
-      this.setTimer();
-    },
-    (error)=>{
-      if(this.tweets.length == 0) {
-        this.noPosts = true;
-      }
-      this.setTimer();
-      console.log("error in fetching the json",error);
-    });
+          this.setTimer();
+        },
+        (error)=>{
+          if(this.tweets.length == 0) {
+            this.noPosts = true;
+          }
+          this.setTimer();
+          console.log("error in fetching the json",error);
+        });
+    }, ((newPosts) ? 1000 : 0));
   }
 
   unsubscribeTweetsApi(){
