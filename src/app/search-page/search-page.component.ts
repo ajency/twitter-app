@@ -65,7 +65,7 @@ export class SearchPageComponent implements OnInit {
         for (const tweet of data.statuses.reverse()) {
           setTimeout(() => {
             this.tweets.unshift(tweet);
-          }, 300 * i++);
+          }, 0 * i++);
         }
       } else {
         if(this.tweets.length == 0) {
