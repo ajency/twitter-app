@@ -64,11 +64,14 @@ export class SearchPageComponent implements OnInit {
   }
 
   stopInterval(){
-    clearInterval(this.interval);
-    this.interval = null;
+    if(this.interval) {
+        clearInterval(this.interval);
+        this.interval = null;
+    }
   }
 
   startInterval(){
+    this.stopInterval();
     this.timeLeft = 30;
     this.interval = setInterval(() => {
       this.setTime();
@@ -92,9 +95,7 @@ export class SearchPageComponent implements OnInit {
     if(this.tweetsApiCall){
       this.tweetsApiCall.unsubscribe();
     }
-    if(this.interval) {
-        this.stopInterval();
-    }
+    this.stopInterval();
     this.tweets = [];
   }
 }
