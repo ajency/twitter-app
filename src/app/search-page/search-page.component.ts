@@ -9,6 +9,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   selector: 'app-search-page',
   templateUrl: './search-page.component.html',
   styleUrls: ['./search-page.component.scss'],
+  /*Animation to load tweets*/
   animations: [
     trigger('fadeInOut', [
       transition(':enter', [
@@ -46,6 +47,7 @@ export class SearchPageComponent implements OnInit {
     this.unsubscribeTweetsApi();
   }
 
+  /*Fetch text from search-box component*/
   searchByText(search_text){
     this.twitterParam = search_text;
     this.router.navigateByUrl("/?key="+this.twitterParam);
@@ -54,6 +56,7 @@ export class SearchPageComponent implements OnInit {
     this.getAllTweets();
   }
 
+  /*Check timer*/
   setTime() {
   	if(this.timeLeft > 1) {
   		this.timeLeft--;
@@ -62,6 +65,7 @@ export class SearchPageComponent implements OnInit {
   	}
   }
 
+  /*Set countdown timer for auto-refresh*/
   setTimer(){
     this.fetchLoader = false;
     this.timeLeft = 30;
@@ -70,10 +74,12 @@ export class SearchPageComponent implements OnInit {
     },1000);
   }
 
+  /*Fetch Tweets from external server*/
   getAllTweets(newPosts = false){
     this.unsubscribeTweetsApi();
     let url = this.apiservice.apiUrl + '/twittersearch?key='+((!this.twitterParam || this.twitterParam.trim() == '') ? "adobe" : this.twitterParam);
     this.fetchLoader = true;
+    /*Load tweets one at a time*/
     setTimeout(() => {
         this.tweetsApiCall = this.apiservice.request(url,'get',{}).subscribe((data)=>{
           if(data.statuses && data.statuses.length != 0) {
@@ -103,6 +109,7 @@ export class SearchPageComponent implements OnInit {
     }, ((newPosts) ? 1000 : 0));
   }
 
+  /*Unsubscribe and clear intervals*/
   unsubscribeTweetsApi(){
     if(this.tweetsApiCall){
       this.tweetsApiCall.unsubscribe();

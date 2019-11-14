@@ -7,14 +7,15 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SearchBoxComponent implements OnInit {
 
-	@Input() searchParam : any;
+	@Input() searchParam : any;//Input query param from parent
 
-	@Output() searchText = new EventEmitter();
+	@Output() searchText = new EventEmitter();//Output search param to parent
 
 	constructor() { }
 
 	ngOnInit() { }
 
+	/*Emit param to parent*/
 	searchTweets() {
 		this.searchText.emit(this.searchParam);
 	}
